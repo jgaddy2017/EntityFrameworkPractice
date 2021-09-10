@@ -20,6 +20,10 @@ namespace EntityFrameworkPractice
     */
     #endregion
 
+    #region
+
+    #endregion
+
     class TodoDbContext : DbContext
     {
         public DbSet<Todo> Todos { get; set; }

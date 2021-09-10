@@ -35,6 +35,22 @@ namespace EntityFrameworkPractice
         finished, check your database for seed data
         */
         #endregion
+
+        #region how to seed data thru config file
+            /*
+             -go to your configuration.cs 
+             -in the override void Seed method write your seed statement
+             Example
+                context.yourTable/modelName.AddOrUpdate(a => a.Name,
+                    new Author
+                    {
+                        Name = "Author 1",
+                        Courses = new Collection<Course>(){
+                            new Course() { Name = "Course for Author 1", Description = "Description" }
+                        }
+                    });
+             */
+        #endregion
         static void Main(string[] args)
         {
         }
