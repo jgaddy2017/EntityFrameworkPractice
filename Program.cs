@@ -37,18 +37,41 @@ namespace EntityFrameworkPractice
         #endregion
 
         #region how to seed data thru config file
-            /*
-             -go to your configuration.cs 
-             -in the override void Seed method write your seed statement
-             Example
-                context.yourTable/modelName.AddOrUpdate(a => a.Name,
-                    new Author
-                    {
-                        Name = "Author 1",
-                        Courses = new Collection<Course>(){
-                            new Course() { Name = "Course for Author 1", Description = "Description" }
-                        }
-                    });
+        /*
+         -go to your configuration.cs 
+         -in the override void Seed method write your seed statement
+         Example
+            context.yourTable/modelName.AddOrUpdate(a => a.Name,
+                new Author
+                {
+                    Name = "Author 1",
+                    Courses = new Collection<Course>(){
+                        new Course() { Name = "Course for Author 1", Description = "Description" }
+                    }
+                });
+         */
+        #endregion
+
+        #region Overriding Conventions
+            
+             //Two types Data Annotations and Fluent API
+             /*
+              --- Using Data Annotations
+              -add using System.ComponentModel.DataAnnotations;
+              -name table buy going above the class name and writting [Table("myTableName")]
+              -make a field required, go above the property you want to make required and use the annotation [Required]
+              -run command 'add-migration migrationName'
+              -run command 'update-database'
+
+              -Setting Column name and type annotation, place above class property -> [Column("sName", TypeName = "varchar")]
+              -Set property as a primary key -> [Key] and underneath add a second annotation [DatabaseGenerated(DatabaseGeneratedOption.None)]
+              -If a property cant be null, use annotation [Required]
+              -limiting the length of your string -> [MaxLength(255)]
+              -to make sure it is unique -> [Index(IsUnique = true)]
+
+               --how to make a foregin key
+               [ForeignKey("AuthorId")]
+               public Author Author {get; set;}
              */
         #endregion
         static void Main(string[] args)
