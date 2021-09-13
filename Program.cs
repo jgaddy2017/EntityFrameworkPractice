@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using EntityFrameworkPractice.Models;
 
 namespace EntityFrameworkPractice
 {
@@ -188,7 +188,8 @@ namespace EntityFrameworkPractice
             #endregion
 
 
-            #region
+            #region LINQ extention methods Additional
+            /*
             var context = new TodoDbContext();
 
             var singleData = context.Users.OrderBy(n => n.Name).FirstOrDefault(n => n.Name.Contains("Smith"));
@@ -209,7 +210,28 @@ namespace EntityFrameworkPractice
             Console.WriteLine("Count Two Data is: {0}", countTwoData);
 
 
+            */
+            #endregion
 
+            #region Adding Objects
+
+            var context = new TodoDbContext();
+
+            //need to create a reference when to the importance table to use in our insert table
+            var todoImportance = context.Importance.Single(a => a.Id == 1);
+
+            //This creates a new user rebecca, if you dont want to create a new record you need to ref the User
+            var newTodo = new Todo {
+                User = new User { Name = "Rebecca Gaddy", Password = "myPassword", Username = "rhgaddy" },
+                createdby = DateTime.Now,
+                item = "MUSC Stuff",
+                isDone = false,
+                importance = todoImportance
+            };
+
+
+            context.Todos.Add(newTodo);
+            context.SaveChanges();
             #endregion
 
             Console.ReadLine();
