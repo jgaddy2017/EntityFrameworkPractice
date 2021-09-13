@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace EntityFrameworkPractice
 {
     class Program
@@ -76,6 +77,142 @@ namespace EntityFrameworkPractice
         #endregion
         static void Main(string[] args)
         {
+            Console.WriteLine("Hello World");
+
+            #region Pulling Data with linq and extention methods
+            /*
+            var context = new TodoDbContext();
+
+            //LINQ syntax
+            var query =
+                from c in context.Users
+                where c.Name.Contains("Smith")
+                orderby c.Name
+                select c;
+
+            foreach (var user in query)
+                Console.WriteLine(user.Name);
+
+            //Extension methods
+            var users = context.Users.Where(c => c.Name.Contains("quentin")).OrderBy(c => c.Name);
+
+            foreach (var user in users)
+                Console.WriteLine(user.Name);
+                */
+            #endregion
+
+
+            #region How to get selected info
+            /*
+             var context = new TodoDbContext();
+
+            var query = 
+                from c in context.User
+                group c by c.User
+                into g
+                select g;
+
+                foreach(var group in query){
+                    Console.WriteLine(group.Key);
+                    
+                    foreach(var user in group){
+                        Console.WriteLine("\t{0}", user.Name);
+
+                        //--------------how to use count with this--------------------
+                        //Console.WriteLine("{0} ({1})", group.Key, group.Count());
+                    }
+                }
+             */
+            #endregion
+
+
+            #region How to do Inner Join, Group Join, Cross Join
+            /*
+            var context = new TodoDbContext();
+            var query =
+                from t in context.Todos
+                select new { Item = t.item, Name = t.User.Name, Importance = t.importance.importanceName };
+
+            foreach (var item in query) {
+                Console.WriteLine("{0} -> {1} -> {2}", item.Item, item.Name, item.Importance);
+            }
+
+            Console.WriteLine("-----------------------------------------------------------------");
+
+            //var data = from u in context.Users
+             //          join t in context.Todos on u.Id equals t.User into g
+             //          select new { User = u.Name, Todo = g.Count() };
+             */
+            #endregion
+
+            #region LINQ Extension Methods
+
+            //var context = new TodoDbContext();
+            /*
+            //this returns an IQueryable object
+            var data = context.Todos
+                .Where(t => t.isDone == true)
+                .Select(t => t.item);
+
+
+            Console.WriteLine(data);
+            //how to loop true Iquerable object
+            foreach (var todo in data) {
+                Console.WriteLine(todo);
+            }
+            */
+
+            //Using group by
+            /*
+            var groups = context.Todos.GroupBy(t => t.importance);
+
+            foreach (var group in groups) {
+                Console.WriteLine("Key: " + group.Key);
+                foreach (var todo in group) {
+                    Console.WriteLine("\t" + todo.item);
+                }
+            }
+            */
+
+
+            //Using Joins
+            //not sure how this works
+            /*context.Todos.Join(context.Todos, t => t.User, u => u.Id, (todo, user) =>
+            {
+
+            });
+            */
+
+
+
+            #endregion
+
+
+            #region
+            var context = new TodoDbContext();
+
+            var singleData = context.Users.OrderBy(n => n.Name).FirstOrDefault(n => n.Name.Contains("Smith"));
+            Console.WriteLine(singleData);
+            Console.WriteLine(singleData.Name);
+
+            Console.WriteLine("---------------------    ANY   --------------------------");
+
+            var anyData = context.Todos.Any(t => t.importance.Id == 2);
+            Console.WriteLine(anyData);
+
+            Console.WriteLine("--------------------- Counting -----------------------");
+
+            var countData = context.Todos.Count();
+            var countTwoData = context.Todos.Where(t => t.importance.Id == 2).Count();
+
+            Console.WriteLine("Count Data is: {0}", countData);
+            Console.WriteLine("Count Two Data is: {0}", countTwoData);
+
+
+
+            #endregion
+
+            Console.ReadLine();
         }
         
     }
